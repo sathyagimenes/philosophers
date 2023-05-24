@@ -1,5 +1,5 @@
 # WIP: philosophers
-42's philosophers project | Threads and mutexes.
+42's philosophers project | Threads and mutexes
 
 
 This project asks us to solve the [dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) implementing a mutithreading solution.
