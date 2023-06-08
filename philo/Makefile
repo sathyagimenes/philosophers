@@ -4,6 +4,7 @@ CC = cc
 CFLAGS = -pthread -Wall -Werror -Wextra -g3
 
 SRCS = ./sources/main.c				\
+		./sources/utils.c				\
 
 
 OBJS    = $(SRCS:%.c=%.o)
@@ -16,9 +17,11 @@ $(NAME):	$(OBJS)
 %.o:		%.c
 				$(CC) $(CFLAGS) -I $(INCLUDES_PATH) -o $@ -c $<
 
+run:	$(NAME)
+			./$(NAME) 3 410 200 200
+
 valg:	$(NAME)
-			valgrind -s --leak-check=full --show-leak-kinds=all \
-			--track-origins=yes --trace-children=yes --log-file=valg.log ./$(NAME)
+			valgrind -s --tool=helgrind --tool=drd --log-file=valg.log ./$(NAME)
 
 clean:
 				rm -f $(OBJS)
