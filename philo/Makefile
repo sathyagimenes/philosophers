@@ -22,7 +22,10 @@ run:	$(NAME)
 			./$(NAME) 3 410 200 200
 
 valg:	$(NAME)
-			valgrind -s --tool=helgrind --tool=drd --log-file=valg.log ./$(NAME)  3 410 200 200
+			valgrind -s --leak-check=full --log-file=valg.log ./$(NAME) 4 410 200 200
+
+t-valg:	$(NAME)
+			valgrind --tool=helgrind --tool=drd  --log-file=t-valg.log ./$(NAME) 4 410 200 200
 
 clean:
 				rm -f $(OBJS)

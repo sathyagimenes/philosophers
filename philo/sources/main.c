@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/08 17:16:23 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:14:42 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,16 @@ int main(int argc, char **argv)
 	number_of_times_each_philosopher_must_eat
 	*/
 	if (argc < 5 || argc > 6)
-		return (error_msg("Invalid quantity of arguments", NULL, FALSE));
+		return (error_msg("Error: Invalid quantity of arguments", NULL, FALSE));
 	if (check_args(argv))
-		return (error_msg("Invalid argument. Must be interger", NULL, FALSE));
+		return (error_msg("Error: Invalid argument. Must be interger", NULL, FALSE));
 	if (init(&data, argc, argv))
 		return(1);
-	//verify case of just one philo
-	//init threading
-	//free memory
+	// if (!start_routine(data))
+	// {
+		//init threading
+	// }
+	free_mem(&data);
 	printf("it is working...\n");
 	return (0);
 }

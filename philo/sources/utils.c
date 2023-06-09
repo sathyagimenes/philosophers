@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/08 17:53:30 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/09 20:16:17 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	free_mem(t_data	*data)
 {
 	if (data)
-		printf("freeing memory");
+		printf("freeing memory\n");
 }
 
 int	error_msg(t_string str, t_data *data, t_bool make_free)
