@@ -5,6 +5,7 @@ CFLAGS = -pthread -Wall -Werror -Wextra -g3
 
 SRCS = ./sources/main.c				\
 		./sources/utils.c				\
+		./sources/init.c				\
 
 
 OBJS    = $(SRCS:%.c=%.o)
@@ -21,7 +22,7 @@ run:	$(NAME)
 			./$(NAME) 3 410 200 200
 
 valg:	$(NAME)
-			valgrind -s --tool=helgrind --tool=drd --log-file=valg.log ./$(NAME)
+			valgrind -s --tool=helgrind --tool=drd --log-file=valg.log ./$(NAME)  3 410 200 200
 
 clean:
 				rm -f $(OBJS)

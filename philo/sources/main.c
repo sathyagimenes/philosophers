@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/08 14:37:06 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:16:23 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,29 @@ int check_args(char **argv)
 
 int main(int argc, char **argv)
 {
+	t_data data;
 	/*
-	number_of_philosophers; time_to_die; time_to_eat; time_to_sleep; number_of_times_each_philosopher_must_eat
+	number_of_philosophers;
+	time_to_die;
+	time_to_eat;
+	time_to_sleep;
+	number_of_times_each_philosopher_must_eat
 	*/
 	if (argc < 5 || argc > 6)
 		return (error_msg("Invalid quantity of arguments", NULL, FALSE));
 	if (check_args(argv))
 		return (error_msg("Invalid argument. Must be interger", NULL, FALSE));
+	if (init(&data, argc, argv))
+		return(1);
+	//verify case of just one philo
+	//init threading
+	//free memory
 	printf("it is working...\n");
 	return (0);
 }
+
+/*
+	threading
+	salva start time = get_time
+	
+*/
