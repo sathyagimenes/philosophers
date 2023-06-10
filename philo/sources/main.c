@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/09 20:14:42 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:33:01 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int check_args(char **argv)
 
 int main(int argc, char **argv)
 {
-	t_data data;
+	t_data *data;
 	/*
 	number_of_philosophers;
 	time_to_die;
@@ -46,13 +46,14 @@ int main(int argc, char **argv)
 		return (error_msg("Error: Invalid quantity of arguments", NULL, FALSE));
 	if (check_args(argv))
 		return (error_msg("Error: Invalid argument. Must be interger", NULL, FALSE));
-	if (init(&data, argc, argv))
+	data = malloc(sizeof(t_data) * 1);
+	if (init(data, argc, argv))
 		return(1);
 	// if (!start_routine(data))
 	// {
 		//init threading
 	// }
-	free_mem(&data);
+	free_mem(data);
 	printf("it is working...\n");
 	return (0);
 }

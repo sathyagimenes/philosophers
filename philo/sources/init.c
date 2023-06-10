@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/09 20:13:46 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/09 23:33:49 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static t_bool	init_mutex(t_data *data);
 
 int	init(t_data *data, int argc, char **argv)
 {
-	data = malloc(sizeof(t_data) * 1);
 	if (!data)
 		return(error_msg("Error: Could not allocate memory.3", NULL, FALSE));
 	if (init_data(data, argc, argv))
