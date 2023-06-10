@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/09 20:14:25 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/10 00:51:25 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef char		*t_string;
 typedef struct s_data	t_data;
 typedef struct s_philo
 {
-	unsigned int	id;
+	int	id;
 	t_data			*data;
 	pthread_t		thread;
 	time_t			last_meal;
@@ -57,5 +57,6 @@ int		error_msg(t_string str, t_data *data, t_bool make_free);
 int		init(t_data *data, int argc, char **argv);
 int		ft_atoi(const char *nptr);
 void	free_mem(t_data	*data);
+int		print_msg(time_t time, int philo, t_string action);
 
 #endif

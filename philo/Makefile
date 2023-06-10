@@ -19,7 +19,7 @@ $(NAME):	$(OBJS)
 				$(CC) $(CFLAGS) -I $(INCLUDES_PATH) -o $@ -c $<
 
 run:	$(NAME)
-			./$(NAME) 3 410 200 200
+			./$(NAME) 4 410 200 200
 
 valg:	$(NAME)
 			valgrind -s --leak-check=full --log-file=valg.log ./$(NAME) 4 410 200 200

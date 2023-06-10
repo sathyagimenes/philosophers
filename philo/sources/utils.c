@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/09 23:34:35 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/10 00:21:19 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 void	free_mem(t_data	*data)
 {
 	int i;
+
 	i = 0;
-	while (i < data->philo_num)
-		free(data->philos[i++]);
-	free(data->philos);
-	free(data->forks_lock);
+	if (data->philos[i])
+	{
+		while (i < data->philo_num)
+			free(data->philos[i++]);
+		free(data->philos);
+	}
+	if (data->forks_lock)
+		free(data->forks_lock);
 	free(data);
 }
 
@@ -52,4 +57,10 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (num * sign);
+}
+
+int	print_msg(time_t time, int philo, t_string action)
+{
+	printf("%ld %d %s\n", time, philo, action);
+	return (0);
 }
