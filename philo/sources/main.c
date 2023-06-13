@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/10 00:56:25 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:48:23 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,27 @@ time_t	get_time(void)
 {
 	struct timeval	tv;
 
-	gettimeofday(&tv, NULL);
+	if (gettimeofday(&tv, NULL))
+		return (error_msg("Errorgettimeofday() FAILURE\n", NULL, FALSE));
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-static int start_simulation(t_data *data)
+static int	start_simulation(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->start_time = get_time();
 	while (i < data->philo_num)
 	{
-		pthread_create(&data->philos[i]->thread, NULL, &routine, data->philos[i]);
-		print_msg(data->start_time, data->philos[i]->id, "is working1");
+		if (pthread_create(&data->philos[i]->thread, NULL, &philo_routine, data->philos[i]))
+			return (error_msg("Error: failed to create thread", data, TRUE));
 		i++;
 	}
+	if (data->philo_num > 1)
+	{
+		if (pthread_create(&data->controller, NULL, &controller_routine, data))
+			return (error_msg("Error: failed to create thread", data, TRUE));
+	}
 	return (0);
-}
-
-void	*routine(void *philo_data)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)philo_data;
-	pthread_mutex_lock(&philo->data->write_lock);
-	print_msg(philo->data->start_time, philo->id, "is working");
-	pthread_mutex_unlock(&philo->data->write_lock);
-	return (NULL);
 }

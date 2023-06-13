@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/10 00:51:25 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:21:31 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ typedef struct s_philo
 	t_data			*data;
 	pthread_t		thread;
 	time_t			last_meal;
-	unsigned int	times_ate;
+	int				times_ate;
 	pthread_mutex_t	meal_time_lock;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 }	t_philo;
 typedef struct s_data
 {
-	pthread_t		*tid;
+	pthread_t		controller;
 	t_bool			dead;//ver se vai usar
 	t_bool			end_simulation;
 	int				philo_num;
 	int				meals_num;
-	time_t			death_time;
+	int				death_time;
 	time_t			eat_time;
 	time_t			sleep_time;
 	time_t			start_time;
@@ -57,6 +57,9 @@ int		error_msg(t_string str, t_data *data, t_bool make_free);
 int		init(t_data *data, int argc, char **argv);
 int		ft_atoi(const char *nptr);
 void	free_mem(t_data	*data);
-int		print_msg(time_t time, int philo, t_string action);
+int		print_status(t_philo *philo, t_string action);
+void	*philo_routine(void *philo_data);
+void	*controller_routine(void *philo_data);
+time_t	get_time(void);
 
 #endif

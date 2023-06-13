@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/10 00:21:19 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:23:46 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,21 @@ int	ft_atoi(const char *nptr)
 	return (num * sign);
 }
 
-int	print_msg(time_t time, int philo, t_string action)
+int	print_msg(t_philo *philo, t_string action)
 {
-	printf("%ld %d %s\n", time, philo, action);
+	time_t	time;
+	int philo_num;
+
+	time = get_time() - philo->data->start_time;
+	philo_num = philo->id;
+	printf("%ld ms Philosopher %d %s\n", time, philo_num, action);
+	return (0);
+}
+
+int	print_status(t_philo *philo, t_string action)
+{
+	pthread_mutex_lock(&philo->data->write_lock);
+	print_msg(philo, action);
+	pthread_mutex_unlock(&philo->data->write_lock);
 	return (0);
 }
