@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/12 23:21:31 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:45:52 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ typedef struct s_philo
 	pthread_t		thread;
 	time_t			last_meal;
 	int				times_ate;
+	int				fork[2];
 	pthread_mutex_t	meal_time_lock;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*left_fork;
+	// pthread_mutex_t	*right_fork;
+	// pthread_mutex_t	*left_fork;
 }	t_philo;
 typedef struct s_data
 {

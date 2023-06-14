@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/12 23:14:38 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:37:53 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ void	*philo_routine(void *philo_data)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_data;
-	// printf("Philo id: %d\n", philo->id);
 	pthread_mutex_lock(&philo->meal_time_lock);
 	philo->last_meal = philo->data->start_time;
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	// should delay start and have a latter strat_time?
+	while (get_time() < philo->data->start_time)
+	{
+		continue ;
+	}
 	if (philo->data->death_time == 0)
 		return (NULL);
 	if (philo->data->philo_num == 1)
@@ -50,16 +53,16 @@ void	*philo_routine(void *philo_data)
 void	sleep_routine(t_philo *philo)
 {
 	print_status(philo, "is sleeping");
-	pthread_mutex_unlock(philo->right_fork);
-	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[0]]);
+	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[1]]);
 	wait_action(philo, philo->data->sleep_time);
 }
 
 void eat_routine(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right_fork);
+	pthread_mutex_lock(&philo->data->forks_lock[philo->fork[0]]);
 	print_status(philo, "has taken right fork");
-	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(&philo->data->forks_lock[philo->fork[1]]);
 	print_status(philo, "has taken left fork");
 	print_status(philo, "is eating");
 	pthread_mutex_lock(&philo->meal_time_lock);

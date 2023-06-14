@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/12 23:10:01 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:28:52 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	*controller_routine(void *data_struc)
 void	check_philosophers(t_data *data)
 {
 	int	i;
-	time_t	time;
 	t_bool	died;
 	t_bool	satisfied;
 
@@ -41,15 +40,14 @@ void	check_philosophers(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		time = get_time();
 		pthread_mutex_lock(&data->philos[i]->meal_time_lock);//checar se precisa desse lock
-		if (time - data->philos[i]->last_meal >= data->death_time)
+		if ((get_time() - data->philos[i]->last_meal) >= data->death_time)
 		{
 			died = TRUE;
 			pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 			break ;
 		}
-		if (data->meals_num != -1 && data->philos[i]->times_ate < data->meals_num)
+		if (data->meals_num == -1 || data->philos[i]->times_ate < data->meals_num)
 			satisfied = FALSE;
 		pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 		i++;
