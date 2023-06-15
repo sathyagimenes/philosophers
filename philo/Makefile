@@ -21,13 +21,13 @@ $(NAME):	$(OBJS)
 				$(CC) $(CFLAGS) -I $(INCLUDES_PATH) -o $@ -c $<
 
 run:	$(NAME)
-			./$(NAME) 4 410 200 200
+			./$(NAME) 4 410 200 200 3
 
 valg:	$(NAME)
-			valgrind -s --leak-check=full --track-origins=yes --log-file=valg.log ./$(NAME) 4 410 200 200 10
+			valgrind -s --leak-check=full --log-file=valg.log ./$(NAME) 4 410 200 200 3
 
 t-valg:	$(NAME)
-			valgrind --tool=helgrind --tool=drd --log-file=t-valg.log ./$(NAME) 4 410 200 200 10
+			valgrind --tool=helgrind --tool=drd --log-file=t-valg.log ./$(NAME) 4 410 200 200 3
 
 clean:
 				rm -f $(OBJS)

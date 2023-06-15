@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 20:53:12 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:05:14 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void		wait_threads(t_data *data);
 void		destroy_mutexes(t_data *data);
 
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data *data;
+	t_data	*data;
 	/*
 	number_of_philosophers;
 	time_to_die;
@@ -45,10 +45,10 @@ int main(int argc, char **argv)
 	return (0);
 }
 
-static int check_args(char **argv)
+static int	check_args(char **argv)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (argv[i])

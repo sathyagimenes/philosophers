@@ -6,13 +6,13 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 20:28:52 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:05:59 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	check_philosophers(t_data *data);
+t_bool	check_philosophers(t_data *data);
 
 void	*controller_routine(void *data_struc)
 {
@@ -21,17 +21,14 @@ void	*controller_routine(void *data_struc)
 	data = (t_data *)data_struc;
 	while (get_time() < data->start_time)
 		continue ;
-	while (!data->end_simulation)
-	{
-		check_philosophers(data);
+	while (check_philosophers(data))
 		usleep(1000);
-	}
 	return (NULL);
 }
 
-void	check_philosophers(t_data *data)
+t_bool	check_philosophers(t_data *data)
 {
-	int	i;
+	int		i;
 	t_bool	died;
 	t_bool	satisfied;
 
@@ -40,7 +37,7 @@ void	check_philosophers(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		pthread_mutex_lock(&data->philos[i]->meal_time_lock);//checar se precisa desse lock
+		pthread_mutex_lock(&data->philos[i]->meal_time_lock);
 		if ((get_time() - data->philos[i]->last_meal) >= data->death_time)
 		{
 			died = TRUE;
@@ -57,5 +54,7 @@ void	check_philosophers(t_data *data)
 		pthread_mutex_lock(&data->controll_lock);
 		data->end_simulation = TRUE;
 		pthread_mutex_unlock(&data->controll_lock);
+		return (FALSE);
 	}
+	return (TRUE);
 }
