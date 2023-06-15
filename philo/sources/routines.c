@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 22:06:22 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 22:09:55 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ void eat_routine(t_philo *philo)
 	pthread_mutex_lock(&philo->meal_time_lock);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->meal_time_lock);
-	// print_status(philo, "died");
 	wait_action(philo, philo->data->eat_time);
-	if (continue_simulation(philo))//check if needs to be in separated locks
+	if (continue_simulation(philo))
 	{
 		pthread_mutex_lock(&philo->meal_time_lock);
 		philo->times_ate += 1;
