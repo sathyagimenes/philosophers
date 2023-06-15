@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/11 18:23:46 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:47:19 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,13 @@ int	print_status(t_philo *philo, t_string action)
 	print_msg(philo, action);
 	pthread_mutex_unlock(&philo->data->write_lock);
 	return (0);
+}
+
+time_t	get_time(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (error_msg("Errorgettimeofday() FAILURE\n", NULL, FALSE));
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }

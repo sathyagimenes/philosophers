@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 19:26:44 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 21:00:19 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static int init_philos(t_data *data)
 		data->philos[i]->data = data;
 		data->philos[i]->id = i;
 		data->philos[i]->times_ate = 0;
+		data->philos[i]->last_meal = 0;
 		assign_forks(data->philos[i]);
 		i++;
 	}

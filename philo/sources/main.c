@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 19:51:04 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:53:12 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	check_args(char **argv);
 static int	start_simulation(t_data *data);
-void		*routine(void *philo);
+void		wait_threads(t_data *data);
+void		destroy_mutexes(t_data *data);
+
 
 int main(int argc, char **argv)
 {
@@ -31,10 +33,14 @@ int main(int argc, char **argv)
 	if (check_args(argv))
 		return (error_msg("Error: Invalid argument. Must be interger", NULL, FALSE));
 	data = malloc(sizeof(t_data) * 1);
+	if (!data)
+		return(error_msg("Error: malloc fail", NULL, FALSE));
 	if (init(data, argc, argv))
 		return(1);
 	if (start_simulation(data))
 		return (1);
+	wait_threads(data);
+	destroy_mutexes(data);
 	free_mem(data);
 	return (0);
 }
@@ -59,15 +65,6 @@ static int check_args(char **argv)
 	return (0);
 }
 
-time_t	get_time(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL))
-		return (error_msg("Errorgettimeofday() FAILURE\n", NULL, FALSE));
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
 static int	start_simulation(t_data *data)
 {
 	int	i;
@@ -84,7 +81,14 @@ static int	start_simulation(t_data *data)
 	{
 		if (pthread_create(&data->controller, NULL, &controller_routine, data))
 			return (error_msg("Error: failed to create thread", data, TRUE));
-	}
+	}	
+	return (0);
+}
+
+void	wait_threads(t_data *data)
+{
+	int	i;
+
 	i = 0;
 	while (i < data->philo_num)
 	{
@@ -93,5 +97,19 @@ static int	start_simulation(t_data *data)
 	}
 	if (data->philo_num > 1)
 		pthread_join(data->controller, NULL);
-	return (0);
+}
+
+void	destroy_mutexes(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo_num)
+	{
+		pthread_mutex_destroy(&data->philos[i]->meal_time_lock);
+		pthread_mutex_destroy(&data->forks_lock[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->controll_lock);
+	pthread_mutex_destroy(&data->write_lock);
 }
