@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 20:47:19 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:27:42 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_mem(t_data	*data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (data->philos[i])
@@ -62,19 +62,22 @@ int	ft_atoi(const char *nptr)
 int	print_msg(t_philo *philo, t_string action)
 {
 	time_t	time;
-	int philo_num;
+	int		philo_num;
 
 	time = get_time() - philo->data->start_time;
-	philo_num = philo->id;
+	philo_num = philo->id + 1;
 	printf("%ld ms Philosopher %d %s\n", time, philo_num, action);
 	return (0);
 }
 
 int	print_status(t_philo *philo, t_string action)
 {
-	pthread_mutex_lock(&philo->data->write_lock);
-	print_msg(philo, action);
-	pthread_mutex_unlock(&philo->data->write_lock);
+	if (continue_simulation(philo))
+	{
+		pthread_mutex_lock(&philo->data->write_lock);
+		print_msg(philo, action);
+		pthread_mutex_unlock(&philo->data->write_lock);
+	}
 	return (0);
 }
 

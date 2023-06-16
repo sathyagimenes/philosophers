@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 22:05:59 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:26:59 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ t_bool	check_philosophers(t_data *data)
 		pthread_mutex_lock(&data->controll_lock);
 		data->end_simulation = TRUE;
 		pthread_mutex_unlock(&data->controll_lock);
+		if (died)
+		{
+			pthread_mutex_lock(&data->write_lock);
+			print_msg(data->philos[i], "died");
+			pthread_mutex_unlock(&data->write_lock);
+		}
 		return (FALSE);
 	}
 	return (TRUE);

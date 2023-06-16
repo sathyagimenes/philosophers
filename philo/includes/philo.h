@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 20:47:30 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:08:55 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_philo
 typedef struct s_data
 {
 	pthread_t		controller;
-	t_bool			dead;//ver se vai usar
 	t_bool			end_simulation;
 	int				philo_num;
 	int				meals_num;
@@ -62,5 +61,7 @@ int		print_status(t_philo *philo, t_string action);
 void	*philo_routine(void *philo_data);
 void	*controller_routine(void *philo_data);
 time_t	get_time(void);
+t_bool	continue_simulation(t_philo *philo);
+int		print_msg(t_philo *philo, t_string action);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 21:00:19 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/15 21:06:35 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	init_data(t_data *data, int argc, char **argv)
 	if (data->philo_num <= 0 || data->philo_num > 200 || data->death_time < 0
 		|| data->eat_time < 0 || data->sleep_time < 0)
 		return (error_msg("Error: Invalid argument value", NULL, FALSE));
-	data->dead = FALSE;//verificar se vai usar
 	data->end_simulation = FALSE;
 	return (0);
 }
