@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 22:09:55 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/16 23:02:10 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	think_routine(t_philo *philo, t_bool silent);
 void	eat_routine(t_philo *philo);
 t_bool	continue_simulation(t_philo *philo);
 void	wait_action(t_philo *philo, time_t time_to_wait);
+void	one_philo_routine(t_philo *philo);
 
 void	*philo_routine(void *philo_data)
 {
@@ -35,7 +36,7 @@ void	*philo_routine(void *philo_data)
 		return (NULL);
 	if (philo->data->philo_num == 1)
 	{
-		//make one philo routine
+		one_philo_routine(philo);
 		return (NULL);
 	}
 	if (philo->id % 2)
@@ -58,7 +59,7 @@ void	sleep_routine(t_philo *philo)
 	wait_action(philo, philo->data->sleep_time);
 }
 
-void eat_routine(t_philo *philo)
+void	eat_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->forks_lock[philo->fork[0]]);
 	print_status(philo, "has taken right fork");
@@ -78,29 +79,29 @@ void eat_routine(t_philo *philo)
 	//drop forks here?
 }
 
-void think_routine(t_philo *philo, t_bool silent)
+void	think_routine(t_philo *philo, t_bool silent)
 {
-	if(silent)
-		print_status(philo, "is thinking");
-	else
-		print_status(philo, "is thinking");
-	//rever essa parte tem que esperar o think, pq se não vai ter uma fila descordenada para comer
-	// time_t	time_to_think;
-
-	// pthread_mutex_lock(&philo->meal_time_lock);
-	// time_to_think = (philo->data->death_time
-	// 		- (get_time() - philo->last_meal)
-	// 		- philo->data->eat_time) / 2;
-	// pthread_mutex_unlock(&philo->meal_time_lock);
-	// if (time_to_think < 0)
-	// 	time_to_think = 0;
-	// if (time_to_think == 0 && silent == TRUE)
-	// 	time_to_think = 1;
-	// if (time_to_think > 600)
-	// 	time_to_think = 200;
-	// if (silent == FALSE)
+	// if (silent)
 	// 	print_status(philo, "is thinking");
-	// wait_action(philo, time_to_think);
+	// else
+	// 	print_status(philo, "is thinking");
+	//rever essa parte tem que esperar o think, pq se não vai ter uma fila descordenada para comer
+	time_t	time_to_think;
+
+	pthread_mutex_lock(&philo->meal_time_lock);
+	time_to_think = (philo->data->death_time
+			- (get_time() - philo->last_meal)
+			- philo->data->eat_time) / 2;
+	pthread_mutex_unlock(&philo->meal_time_lock);
+	if (time_to_think < 0)
+		time_to_think = 0;
+	if (time_to_think == 0 && silent == TRUE)
+		time_to_think = 1;
+	if (time_to_think > 600)
+		time_to_think = 200;
+	if (silent == FALSE)
+		print_status(philo, "is thinking");
+	wait_action(philo, time_to_think);
 }
 
 void	wait_action(t_philo *philo, time_t time_to_wait)
@@ -126,4 +127,12 @@ t_bool	continue_simulation(t_philo *philo)
 		continue_simulation = FALSE;
 	pthread_mutex_unlock(&philo->data->controll_lock);
 	return (continue_simulation);
+}
+
+void	one_philo_routine(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->forks_lock[philo->fork[0]]);
+	print_status(philo, "has taken right fork");
+	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[0]]);
+	print_status(philo, "died");
 }

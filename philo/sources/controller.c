@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/15 21:26:59 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/16 23:22:25 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void	*controller_routine(void *data_struc)
 	data = (t_data *)data_struc;
 	while (get_time() < data->start_time)
 		continue ;
+	// while (TRUE)
+	// {
+	// 	if (check_philosophers(data))
+	// 		return (NULL);
+	// 	usleep(1000);
+	// }
 	while (check_philosophers(data))
 		usleep(1000);
 	return (NULL);

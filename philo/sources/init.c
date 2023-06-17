@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/15 21:06:35 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/16 23:24:46 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	assign_forks(t_philo *philo)
 	}
 }
 
-static int init_philos(t_data *data)
+static int	init_philos(t_data *data)
 {
 	int	i;
 
@@ -118,7 +118,7 @@ static int init_philos(t_data *data)
 static pthread_mutex_t	*init_forks(t_data *self)
 {
 	pthread_mutex_t	*forks;
-	int	i;
+	int				i;
 
 	forks = malloc(sizeof(pthread_mutex_t) * self->philo_num);
 	if (!forks)
