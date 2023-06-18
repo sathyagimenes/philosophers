@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/16 23:02:10 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:55:01 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ void	*philo_routine(void *philo_data)
 	pthread_mutex_lock(&philo->meal_time_lock);
 	philo->last_meal = philo->data->start_time;
 	pthread_mutex_unlock(&philo->meal_time_lock);
-	// should delay start and have a latter strat_time?
 	while (get_time() < philo->data->start_time)
-	{
 		continue ;
-	}
 	if (philo->data->death_time == 0)
 		return (NULL);
 	if (philo->data->philo_num == 1)
@@ -44,7 +41,6 @@ void	*philo_routine(void *philo_data)
 	while (continue_simulation(philo))
 	{
 		eat_routine(philo);
-		//drop forks here?
 		sleep_routine(philo);
 		think_routine(philo, FALSE);
 	}
@@ -76,16 +72,10 @@ void	eat_routine(t_philo *philo)
 		philo->times_ate += 1;
 		pthread_mutex_unlock(&philo->meal_time_lock);
 	}
-	//drop forks here?
 }
 
 void	think_routine(t_philo *philo, t_bool silent)
 {
-	// if (silent)
-	// 	print_status(philo, "is thinking");
-	// else
-	// 	print_status(philo, "is thinking");
-	//rever essa parte tem que esperar o think, pq se não vai ter uma fila descordenada para comer
 	time_t	time_to_think;
 
 	pthread_mutex_lock(&philo->meal_time_lock);

@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/16 23:36:20 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:52:46 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,14 @@ void		destroy_mutexes(t_data *data);
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	/*
-	number_of_philosophers;
-	time_to_die;
-	time_to_eat;
-	time_to_sleep;
-	number_of_times_each_philosopher_must_eat
-	*/
+
 	if (argc < 5 || argc > 6)
 		return (error_msg("Error: Invalid quantity of arguments", NULL, FALSE));
 	if (check_args(argv))
 		return (error_msg("Error: Invalid argument. Must be interger", NULL, FALSE));
 	data = malloc(sizeof(t_data) * 1);
 	if (!data)
-		return(error_msg("Error: malloc fail", NULL, FALSE));
+		return(error_msg("Error: Could not allocate memory.", NULL, FALSE));
 	if (init(data, argc, argv))
 		return(1);
 	if (start_simulation(data))

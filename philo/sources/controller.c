@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 14:00:49 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:54:22 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ void	*controller_routine(void *data_struc)
 	data = (t_data *)data_struc;
 	while (get_time() < data->start_time)
 		continue ;
-	// while (TRUE)
-	// {
-	// 	if (check_philosophers(data))
-	// 		return (NULL);
-	// 	usleep(1000);
-	// }
 	while (check_philosophers(data))
 		usleep(1000);
 	return (NULL);
@@ -47,7 +41,6 @@ t_bool	check_philosophers(t_data *data)
 		if ((get_time() - data->philos[i]->last_meal) >= data->death_time)
 		{
 			died = TRUE;
-			// pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 			break ;
 		}
 		if (data->meals_num == -1 || data->philos[i]->times_ate < data->meals_num)

@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/16 23:24:46 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:52:07 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 static int		init_data(t_data *data, int argc, char **argv);
 static int		init_philos(t_data *data);
-// static int		assign_forks(t_data *data);
 static t_bool	init_mutex(t_data *data);
 
 int	init(t_data *data, int argc, char **argv)
 {
-	if (!data)
-		return(error_msg("Error: Could not allocate memory.3", NULL, FALSE));
 	if (init_data(data, argc, argv))
 		return (1);
 	if (init_philos(data))
@@ -64,19 +61,17 @@ static int	init_philos(t_data *data)
 
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
-		return (error_msg("Error: Could not allocate memory.1", NULL, FALSE));
+		return (error_msg("Error: Could not allocate memory.", NULL, FALSE));
 	i = 0;
 	while (i < data->philo_num)
 	{
 		data->philos[i] = malloc(sizeof(t_philo) * 1);
 		if (!data->philos[i])
 		{
-			perror("Error: Could not allocate memory.2");
-			return (error_msg("Error: Could not allocate memory.2", NULL, FALSE));//rever se precisa dar free
+			return (error_msg("Error: Could not allocate memory.", NULL, FALSE));
 		}
 		if (pthread_mutex_init(&data->philos[i]->meal_time_lock, 0) != 0)
 		{
-			perror("Error: Could not allocate memory.2");
 			return (error_msg("Error: Could not create mutex.", NULL, FALSE));
 		}
 		data->philos[i]->data = data;
@@ -86,35 +81,9 @@ static int	init_philos(t_data *data)
 		assign_forks(data->philos[i]);
 		i++;
 	}
-	// if (assign_forks(data))
-	// 	return (1);
 	return (0);
 }
 
-// static int assign_forks(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	data->forks_lock = malloc(sizeof(pthread_mutex_t) * data->philo_num);
-// 	if (!data->forks_lock)
-// 		return (error_msg("Error: Could not allocate memory.5", data, FALSE));//precisa apagar mem?
-// 	if (pthread_mutex_init(&data->forks_lock[i], 0) != 0)
-// 	{
-// 		perror("error");
-// 		return (error_msg("Error: Could not create mutex.", data, TRUE));
-// 	}
-// 	data->philos[0]->left_fork = &data->forks_lock[0];
-// 	data->philos[0]->right_fork = &data->forks_lock[data->philo_num - 1];
-// 	while (++i < data->philo_num)
-// 	{
-// 		if (pthread_mutex_init(&data->forks_lock[i], NULL) != 0)
-// 			return (error_msg("Error: Could not create mutex.", data, TRUE));
-// 		data->philos[i]->left_fork = &data->forks_lock[i];
-// 		data->philos[i]->right_fork = &data->forks_lock[i - 1];
-// 	}
-// 	return (0);
-// }
 static pthread_mutex_t	*init_forks(t_data *self)
 {
 	pthread_mutex_t	*forks;

@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/15 21:08:55 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:53:42 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include <stdio.h>		// printf
 # include <stdlib.h>	// malloc, free
-# include <string.h>	// memset
 # include <unistd.h>	// write, usleep
 # include <pthread.h>	// pthread functions
 # include <sys/time.h>	// gettimeofday
 
 # define TRUE 1
 # define FALSE 0
-typedef int			t_bool;
-typedef char		*t_string;
+
+typedef int				t_bool;
+typedef char			*t_string;
 typedef struct s_data	t_data;
 typedef struct s_philo
 {
@@ -34,8 +34,6 @@ typedef struct s_philo
 	int				times_ate;
 	int				fork[2];
 	pthread_mutex_t	meal_time_lock;
-	// pthread_mutex_t	*right_fork;
-	// pthread_mutex_t	*left_fork;
 }	t_philo;
 typedef struct s_data
 {
