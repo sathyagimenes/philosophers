@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 14:52:46 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 21:25:38 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@ static int	start_simulation(t_data *data);
 void		wait_threads(t_data *data);
 void		destroy_mutexes(t_data *data);
 
-
 int	main(int argc, char **argv)
 {
 	t_data	*data;
 
 	if (argc < 5 || argc > 6)
-		return (error_msg("Error: Invalid quantity of arguments", NULL, FALSE));
+		return (error_msg("Invalid quantity of arguments", NULL, FALSE));
 	if (check_args(argv))
-		return (error_msg("Error: Invalid argument. Must be interger", NULL, FALSE));
+		return (error_msg("Invalid argument. Must be interger", NULL, FALSE));
 	data = malloc(sizeof(t_data) * 1);
 	if (!data)
-		return(error_msg("Error: Could not allocate memory.", NULL, FALSE));
+		return (error_msg("Error: Could not allocate memory.", NULL, FALSE));
 	if (init(data, argc, argv))
-		return(1);
+		return (1);
 	if (start_simulation(data))
 		return (1);
 	wait_threads(data);
@@ -67,7 +66,8 @@ static int	start_simulation(t_data *data)
 	data->start_time = get_time() + 20 * data->philo_num;
 	while (i < data->philo_num)
 	{
-		if (pthread_create(&data->philos[i]->thread, NULL, &philo_routine, data->philos[i]))
+		if (pthread_create(&data->philos[i]->thread, NULL,
+				&philo_routine, data->philos[i]))
 			return (error_msg("Error: failed to create thread", data, TRUE));
 		i++;
 	}

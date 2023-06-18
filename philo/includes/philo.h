@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:07:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 14:53:42 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:49:12 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 typedef int				t_bool;
 typedef char			*t_string;
 typedef struct s_data	t_data;
+
 typedef struct s_philo
 {
-	int	id;
+	int				id;
 	t_data			*data;
 	pthread_t		thread;
 	time_t			last_meal;
@@ -35,6 +36,7 @@ typedef struct s_philo
 	int				fork[2];
 	pthread_mutex_t	meal_time_lock;
 }	t_philo;
+
 typedef struct s_data
 {
 	pthread_t		controller;
@@ -59,7 +61,8 @@ int		print_status(t_philo *philo, t_string action);
 void	*philo_routine(void *philo_data);
 void	*controller_routine(void *philo_data);
 time_t	get_time(void);
-t_bool	continue_simulation(t_philo *philo);
 int		print_msg(t_philo *philo, t_string action);
+t_bool	continue_simulation(t_philo *philo);
+void	wait_action(t_philo *philo, time_t time_to_wait);
 
 #endif

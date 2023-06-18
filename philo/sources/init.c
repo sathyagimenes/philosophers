@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 14:52:07 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:59:23 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,11 @@ static int	init_philos(t_data *data)
 		data->philos[i] = malloc(sizeof(t_philo) * 1);
 		if (!data->philos[i])
 		{
-			return (error_msg("Error: Could not allocate memory.", NULL, FALSE));
+			return (error_msg("Error: Could not allocate memory.",
+					NULL, FALSE));
 		}
 		if (pthread_mutex_init(&data->philos[i]->meal_time_lock, 0) != 0)
-		{
 			return (error_msg("Error: Could not create mutex.", NULL, FALSE));
-		}
 		data->philos[i]->data = data;
 		data->philos[i]->id = i;
 		data->philos[i]->times_ate = 0;
@@ -84,27 +83,22 @@ static int	init_philos(t_data *data)
 	return (0);
 }
 
-static pthread_mutex_t	*init_forks(t_data *self)
+static t_bool	init_mutex(t_data *data)
 {
 	pthread_mutex_t	*forks;
 	int				i;
 
-	forks = malloc(sizeof(pthread_mutex_t) * self->philo_num);
+	forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
 	if (!forks)
-		return (NULL);
+		return (error_msg("Error: Memory allocation fail.", data, TRUE));
 	i = 0;
-	while (i < self->philo_num)
+	while (i < data->philo_num)
 	{
 		if (pthread_mutex_init(&forks[i], 0) != 0)
-			return (NULL);
+			return (error_msg("Error: Could not create mutex.", data, TRUE));
 		i++;
 	}
-	return (forks);
-}
-
-static t_bool	init_mutex(t_data *data)
-{
-	data->forks_lock = init_forks(data);
+	data->forks_lock = forks;
 	if (pthread_mutex_init(&data->controll_lock, NULL) != 0)
 		return (error_msg("Error: Could not create mutex.", data, TRUE));
 	if (pthread_mutex_init(&data->write_lock, NULL) != 0)

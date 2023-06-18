@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 14:31:56 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 21:11:41 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,6 @@ void	free_mem(t_data	*data)
 	if (data->forks_lock)
 		free(data->forks_lock);
 	free(data);
-}
-
-int	error_msg(t_string str, t_data *data, t_bool make_free)
-{
-	printf("%s\n", str);
-	if (make_free)
-		free_mem(data);
-	return (1);
 }
 
 int	ft_atoi(const char *nptr)
@@ -57,26 +49,6 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (num * sign);
-}
-
-int	print_msg(t_philo *philo, t_string action)
-{
-	time_t	time;
-	int		philo_num;
-
-	time = get_time() - philo->data->start_time;
-	philo_num = philo->id + 1;
-	printf("%ld ms Philosopher %d %s\n", time, philo_num, action);
-	return (0);
-}
-
-int	print_status(t_philo *philo, t_string action)
-{
-	pthread_mutex_lock(&philo->data->write_lock);
-	if (continue_simulation(philo))
-		print_msg(philo, action);
-	pthread_mutex_unlock(&philo->data->write_lock);
-	return (0);
 }
 
 time_t	get_time(void)
