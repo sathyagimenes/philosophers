@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 23:06:33 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/14 22:05:14 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/16 23:36:20 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	start_simulation(t_data *data)
 	int	i;
 
 	i = 0;
-	data->start_time = get_time() + 10 * data->philo_num;
+	data->start_time = get_time() + 20 * data->philo_num;
 	while (i < data->philo_num)
 	{
 		if (pthread_create(&data->philos[i]->thread, NULL, &philo_routine, data->philos[i]))

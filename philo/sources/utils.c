@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:09:20 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/15 21:27:42 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:31:56 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,10 @@ int	print_msg(t_philo *philo, t_string action)
 
 int	print_status(t_philo *philo, t_string action)
 {
+	pthread_mutex_lock(&philo->data->write_lock);
 	if (continue_simulation(philo))
-	{
-		pthread_mutex_lock(&philo->data->write_lock);
 		print_msg(philo, action);
-		pthread_mutex_unlock(&philo->data->write_lock);
-	}
+	pthread_mutex_unlock(&philo->data->write_lock);
 	return (0);
 }
 

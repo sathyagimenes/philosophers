@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:15 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/16 23:22:25 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:00:49 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_bool	check_philosophers(t_data *data)
 		if ((get_time() - data->philos[i]->last_meal) >= data->death_time)
 		{
 			died = TRUE;
-			pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
+			// pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 			break ;
 		}
 		if (data->meals_num == -1 || data->philos[i]->times_ate < data->meals_num)
@@ -65,6 +65,7 @@ t_bool	check_philosophers(t_data *data)
 			pthread_mutex_lock(&data->write_lock);
 			print_msg(data->philos[i], "died");
 			pthread_mutex_unlock(&data->write_lock);
+			pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 		}
 		return (FALSE);
 	}

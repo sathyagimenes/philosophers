@@ -8,6 +8,6 @@ This project asks us to solve the [dining philosophers problem](https://en.wikip
 </div>
 
 To do list:
-think routine
-fork mutex
+think routine: rever essa rotina
+fork mutex: rever esse mutex
 norm
