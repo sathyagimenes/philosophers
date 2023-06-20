@@ -6,14 +6,14 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/19 23:44:23 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:40:01 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	sleep_routine(t_philo *philo);
-void	think_routine(t_philo *philo, t_bool silent);
+void	think_routine(t_philo *philo, t_bool first_round);
 void	eat_routine(t_philo *philo);
 void	one_philo_routine(t_philo *philo);
 
@@ -72,22 +72,21 @@ void	eat_routine(t_philo *philo)
 	}
 }
 
-void	think_routine(t_philo *philo, t_bool silent)
+void	think_routine(t_philo *philo, t_bool first_round)
 {
 	time_t	time_to_think;
 
 	pthread_mutex_lock(&philo->meal_time_lock);
 	time_to_think = (philo->data->death_time
-			- (get_time() - philo->last_meal)
-			- philo->data->eat_time) / 2;
+			- (get_time() - philo->last_meal)) / 2;
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	if (time_to_think < 0)
 		time_to_think = 0;
-	if (time_to_think == 0 && silent == TRUE)
+	if (time_to_think == 0 && first_round == TRUE)
 		time_to_think = 1;
-	if (time_to_think > 600)
+	if (time_to_think > 200)
 		time_to_think = 200;
-	if (silent == FALSE)
+	if (first_round == FALSE)
 		print_status(philo, "is thinking");
 	wait_action(philo, time_to_think);
 }
