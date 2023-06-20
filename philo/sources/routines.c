@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/20 14:40:01 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/20 23:33:31 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	think_routine(t_philo *philo, t_bool first_round)
 
 	pthread_mutex_lock(&philo->meal_time_lock);
 	time_to_think = (philo->data->death_time
-			- (get_time() - philo->last_meal)) / 2;
+			- (get_time() - philo->last_meal) - philo->data->eat_time) / 2;
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	if (time_to_think < 0)
 		time_to_think = 0;
