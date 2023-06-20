@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/20 23:33:31 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/21 00:34:00 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	*philo_routine(void *philo_data)
 void	sleep_routine(t_philo *philo)
 {
 	print_status(philo, "is sleeping");
-	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[0]]);
 	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[1]]);
+	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[0]]);
 	wait_action(philo, philo->data->sleep_time);
 }
 
