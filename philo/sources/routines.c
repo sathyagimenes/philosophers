@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 09:46:49 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 20:48:49 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:44:23 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,6 @@ void	one_philo_routine(t_philo *philo)
 	pthread_mutex_lock(&philo->data->forks_lock[philo->fork[0]]);
 	print_status(philo, "has taken right fork");
 	pthread_mutex_unlock(&philo->data->forks_lock[philo->fork[0]]);
+	wait_action(philo, philo->data->death_time);
 	print_status(philo, "died");
 }
