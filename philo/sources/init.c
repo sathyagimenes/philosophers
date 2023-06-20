@@ -6,7 +6,7 @@
 /*   By: sde-cama <sde-cama@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:00:32 by sde-cama          #+#    #+#             */
-/*   Updated: 2023/06/18 20:59:23 by sde-cama         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:27:18 by sde-cama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ static void	assign_forks(t_philo *philo)
 {
 	philo->fork[0] = philo->id;
 	philo->fork[1] = (philo->id + 1) % philo->data->philo_num;
-	if (philo->id % 2)
-	{
-		philo->fork[0] = (philo->id + 1) % philo->data->philo_num;
-		philo->fork[1] = philo->id;
-	}
 }
 
 static int	init_philos(t_data *data)
